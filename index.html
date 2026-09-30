@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrida Chebbi — Administrateur Systèmes &amp; DevOps</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="shell">
+  <div class="shell__bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="shell__title">wrida@portfolio:~</span></div>
+  <div class="shell__body">
+    <p class="prompt"><span class="ps1">$</span> whoami</p>
+    <h1 id="typed-name"></h1>
+    <p class="role">Administrateur Systèmes &amp; DevOps Junior</p>
+    <p class="prompt"><span class="ps1">$</span> contact --show</p>
+    <ul class="contact-list">
+      <li><a href="mailto:Cworoud@gmail.com">Cworoud@gmail.com</a></li>
+      <li><a href="https://github.com/VOTRE_USERNAME" target="_blank" rel="noopener">github.com/VOTRE_USERNAME</a></li>
+      <li><a href="https://linkedin.com/in/VOTRE_PROFIL" target="_blank" rel="noopener">linkedin.com/in/VOTRE_PROFIL</a></li>
+      <li>Sousse, Tunisie</li>
+    </ul>
+    <button id="printBtn" class="btn">$ export --pdf</button>
+  </div>
+</header>
+
+<main class="grid">
+
+  <aside class="col-side">
+    <section class="block">
+      <p class="prompt"><span class="ps1">$</span> skills --list</p>
+      <ul class="tags">
+        <li>Linux (Ubuntu, RHEL)</li>
+        <li>Bash</li>
+        <li>Docker</li>
+        <li>Jenkins / CI-CD</li>
+        <li>Git &amp; GitHub</li>
+        <li>SSH &amp; Sécurité</li>
+        <li>AWS (IAM, EC2, S3)</li>
+        <li>HTML / CSS / JS</li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <p class="prompt"><span class="ps1">$</span> cat education.md</p>
+      <div class="entry">
+        <p class="entry__title">Licence Appliquée — Réseaux &amp; Systèmes</p>
+        <p class="entry__meta">Établissement — 2024 – 2027</p>
+      </div>
+      <div class="entry">
+        <p class="entry__title">RH124 — Red Hat System Administration I</p>
+        <p class="entry__meta">Red Hat Training — en cours</p>
+      </div>
+      <div class="entry">
+        <p class="entry__title">AWS Academy Cloud Security Foundations</p>
+        <p class="entry__meta">AWS Academy — en cours</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <p class="prompt"><span class="ps1">$</span> cat langues.md</p>
+      <ul class="tags">
+        <li>Arabe — natif</li>
+        <li>Français — courant</li>
+        <li>Anglais — technique</li>
+      </ul>
+    </section>
+  </aside>
+
+  <section class="col-main">
+    <p class="prompt"><span class="ps1">$</span> tail -f experience.log</p>
+
+    <article class="log">
+      <div class="log__head">
+        <span class="log__tag">2026</span>
+        <h2>Projet DevOps — Infrastructure Cloud &amp; CI/CD</h2>
+      </div>
+      <p class="log__body">
+        Déploiement d'une VM Ubuntu Server 26.04 avec accès SSH sécurisé par clé,
+        installation et configuration de Docker et Jenkins en tant que services,
+        et mise en place d'un pipeline de publication vers GitHub via SSH.
+      </p>
+      <ul class="log__tags">
+        <li>Ubuntu Server</li><li>Docker</li><li>Jenkins</li><li>SSH</li><li>Git</li>
+      </ul>
+    </article>
+
+    <article class="log">
+      <div class="log__head">
+        <span class="log__tag">2026</span>
+        <h2>AWS Academy — Cloud Security Foundations</h2>
+      </div>
+      <p class="log__body">
+        Étude du modèle de responsabilité partagée, des principes de conception
+        de la sécurité et des bonnes pratiques AWS Well-Architected (IAM,
+        Security Groups, chiffrement des données).
+      </p>
+      <ul class="log__tags">
+        <li>AWS IAM</li><li>Security Groups</li><li>Shared Responsibility</li>
+      </ul>
+    </article>
+
+    <article class="log">
+      <div class="log__head">
+        <span class="log__tag">2025 – 2026</span>
+        <h2>Formation continue — Administration Systèmes</h2>
+      </div>
+      <p class="log__body">
+        Pratique régulière d'environnements Linux virtualisés (VMware
+        Workstation), gestion du stockage LVM, résolution d'incidents
+        d'installation et de configuration réseau.
+      </p>
+      <ul class="log__tags">
+        <li>LVM</li><li>VMware</li><li>Réseau</li>
+      </ul>
+    </article>
+
+    <p class="prompt"><span class="ps1">$</span> cat about.md</p>
+    <p class="about">
+      Étudiant en réseaux et systèmes, orienté administration Linux et
+      automatisation. J'aime comprendre l'infrastructure de bout en bout —
+      du serveur à la chaîne de déploiement — et documenter chaque étape
+      proprement.
+    </p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p class="prompt"><span class="ps1">$</span> echo "merci de votre visite"</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
