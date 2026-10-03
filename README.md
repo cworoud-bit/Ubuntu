@@ -1,8 +1,9 @@
-# Projet DevOps — Ubuntu Server, SSH, Docker, Jenkins & CV en ligne
+# Projet DevOps — Ubuntu Server, SSH, Docker, Jenkins & DevSecOps Portfolio
 
 Ce projet documente la mise en place d'un environnement Linux sécurisé
 (VM Ubuntu Server 26.04), l'installation de services (Docker, Jenkins),
-ainsi que la création et la publication d'un mini CV avec Git/GitHub.
+ainsi que la création, l'évolution et la dockerisation d'un portfolio
+DevSecOps avec Git/GitHub.
 
 ---
 
@@ -192,6 +193,193 @@ terminal (cohérent avec le contenu du projet : Linux, Docker, Jenkins, SSH).
 
 ---
 
+## 7. Évolution du mini CV vers DevSecOps Portfolio
+
+Le mini CV initial a été restructuré en portfolio avec une navigation par
+ancre et 5 sections : **About, Skills, Projects, Experience, Contact**.
+
+### Principales améliorations
+- Navbar fixe avec liens de navigation vers chaque section
+- Section Skills avec badges technologiques (style terminal)
+- Section Projects générée dynamiquement en JavaScript à partir d'un
+  tableau d'objets (plutôt que du HTML statique)
+- Section Experience sous forme de "log" chronologique
+- Design toujours responsive (mobile/desktop), thème terminal conservé
+  pour la cohérence visuelle avec le reste du projet
+
+### Capture d'écran
+![Portfolio DevSecOps](screenshots/portfolio-overview.png)
+
+---
+
+## 8. Section DevSecOps Skills
+
+Affichage des technologies pratiquées pendant le projet, sous forme de
+badges générés dynamiquement en JavaScript :
+
+```javascript
+const skills = ["Git","Docker","Jenkins","Kubernetes","Ansible","Terraform","Argo CD"];
+const skillsList = document.getElementById("skills-list");
+skills.forEach(s => {
+  const el = document.createElement("span");
+  el.className = "skill-badge";
+  el.textContent = s;
+  skillsList.appendChild(el);
+});
+```
+
+### Capture d'écran
+![Section Skills](screenshots/skills-section.png)
+
+---
+
+## 9. Section Projects générée dynamiquement en JavaScript
+
+### Extrait de code
+```javascript
+const projects = [
+  {
+    title: "Infrastructure Ubuntu + SSH sécurisé",
+    description: "VM Ubuntu Server 26.04 avec accès SSH par clé, mot de passe désactivé.",
+    tags: ["Ubuntu", "SSH"]
+  },
+  {
+    title: "CI/CD avec Jenkins",
+    description: "Installation de Jenkins en service, vérifié depuis la machine physique.",
+    tags: ["Jenkins", "CI/CD"]
+  },
+  {
+    title: "Conteneurisation avec Docker",
+    description: "Dockerisation du portfolio et déploiement avec Docker Compose.",
+    tags: ["Docker", "Nginx"]
+  },
+  {
+    title: "Automatisation avec Vagrant",
+    description: "Création reproductible de VM via Vagrantfile.",
+    tags: ["Vagrant", "IaC"]
+  }
+];
+
+const projectsList = document.getElementById("projects-list");
+projects.forEach(p => {
+  const card = document.createElement("div");
+  card.className = "project-card";
+  card.innerHTML = `
+    <h3>${p.title}</h3>
+    <p>${p.description}</p>
+    <div class="tags">${p.tags.map(t => `<span>${t}</span>`).join("")}</div>
+  `;
+  projectsList.appendChild(card);
+});
+```
+
+### Capture d'écran
+![Section Projects générée dynamiquement](screenshots/projects-dynamic.png)
+
+---
+
+## 10. Dockerfile
+
+```dockerfile
+FROM nginx:alpine
+
+COPY index.html /usr/share/nginx/html/index.html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+### Explication
+Image légère basée sur `nginx:alpine`, qui copie le fichier HTML du
+portfolio dans le dossier racine web de Nginx (`/usr/share/nginx/html/`)
+et expose le port 80 pour servir le site.
+
+---
+
+## 11. Construction de l'image Docker `cv-docker`
+
+### Commande utilisée
+```bash
+docker build -t cv-docker .
+```
+
+### Résultat
+```
+cv-docker:latest     1c8c3651bab9       93.6MB
+```
+
+### Capture d'écran
+![Image Docker construite](screenshots/docker-build.png)
+
+---
+
+## 12. Exécution du conteneur
+
+### Commande utilisée
+```bash
+docker run -d -p 8081:80 --name cv-container cv-docker
+sudo ufw allow 8081/tcp
+```
+
+### Résultat `docker ps`
+```
+CONTAINER ID   IMAGE       COMMAND                  PORTS                     NAMES
+88a13cc02f22   cv-docker   "/docker-entrypoint.…"   0.0.0.0:8081->80/tcp      cv-container
+```
+
+Accès vérifié depuis la machine physique : `http://192.168.220.174:8081`
+
+### Capture d'écran
+![Portfolio accessible via Docker](screenshots/docker-run-portfolio.png)
+
+---
+
+## 13. Déploiement avec Docker Compose
+
+### docker-compose.yml
+```yaml
+services:
+  portfolio:
+    build: .
+    image: cv-docker
+    container_name: cv-portfolio
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+```
+
+### Commande utilisée
+```bash
+docker compose up -d
+docker compose ps
+```
+
+### Résultat
+```
+NAME           IMAGE       STATUS                  PORTS
+cv-portfolio   cv-docker   Up Less than a second   0.0.0.0:8081->80/tcp
+```
+
+### Capture d'écran
+![Docker Compose en service](screenshots/docker-compose-ps.png)
+
+---
+
+## 14. Publication des modifications sur GitHub via SSH
+
+### Commandes utilisées
+```bash
+git add .
+git commit -m "Évolution en DevSecOps Portfolio + Dockerisation (Dockerfile, docker-compose)"
+git push
+```
+
+### Dépôt GitHub mis à jour
+🔗 https://github.com/cworoud-bit/Ubuntu
+
+---
+
 ## Résumé du projet
 
 | # | Tâche | Statut |
@@ -202,9 +390,18 @@ terminal (cohérent avec le contenu du projet : Linux, Docker, Jenkins, SSH).
 | 4 | Jenkins installé et accessible | ✅ |
 | 5 | Mini CV (HTML/CSS/JS) publié sur GitHub | ✅ |
 | 6 | Push GitHub via SSH configuré et testé | ✅ |
+| 7 | Évolution vers DevSecOps Portfolio | ✅ |
+| 8 | Section DevSecOps Skills | ✅ |
+| 9 | Section Projects dynamique (JavaScript) | ✅ |
+| 10 | Dockerfile (Nginx) | ✅ |
+| 11 | Image Docker `cv-docker` construite | ✅ |
+| 12 | Conteneur exécuté et vérifié | ✅ |
+| 13 | Déploiement avec Docker Compose | ✅ |
+| 14 | Publication sur GitHub via SSH | ✅ |
 
 ## Environnement technique
 - **Hyperviseur** : VMware Workstation
 - **OS invité** : Ubuntu Server 26.04 LTS
 - **Machine physique** : Windows (PowerShell / CMD)
 - **Adresse IP de la VM** : `192.168.220.174`
+- **Conteneurisation** : Docker 29.8.1, Nginx (alpine)
