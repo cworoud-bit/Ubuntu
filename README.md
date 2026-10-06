@@ -462,8 +462,17 @@ vagrant ssh
 | 15-16 | Vagrant (Docker provider) | ✅ |
 
 ## Environnement technique
-- **Hyperviseur** : VMware Workstation
-- **OS invité** : Ubuntu Server 26.04 LTS
-- **Machine physique** : Windows (PowerShell / CMD)
-- **Adresse IP de la VM** : `192.168.220.174`
-- **Conteneurisation** : Docker 29.8.1, Nginx (alpine)
+
+* **Hyperviseur** : VMware Workstation
+* **OS invité** : Ubuntu Server 26.04 LTS
+* **Machine physique (hôte)** : Windows (PowerShell / CMD)
+* **Adresse IP de la VM** : `192.168.220.174`
+* **Accès distant** : SSH (authentification par clé ed25519)
+* **Conteneurisation** : Docker 29.8.1, Nginx (alpine)
+* **Orchestration locale** : Docker Compose
+* **CI/CD** : Jenkins 2.580.1 (service, port 8080)
+* **Infrastructure as Code** : Vagrant 2.4.9 (provider Docker)
+* **Langage/Runtime** : Java 21 (OpenJDK, prérequis Jenkins)
+* **Gestion de version** : Git + GitHub (push via SSH)
+* **Pare-feu** : UFW (ports 22, 8080, 8081 ouverts)
+* **Portfolio** : HTML5 / CSS3 / JavaScript (fichier autonome, thème terminal)
