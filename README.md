@@ -459,6 +459,7 @@ vagrant ssh
 | 12 | Conteneur exécuté et vérifié | ✅ |
 | 13 | Déploiement avec Docker Compose | ✅ |
 | 14 | Publication sur GitHub via SSH | ✅ |
+| 15-16 | Vagrant (Docker provider) | ✅ |
 
 ## Environnement technique
 - **Hyperviseur** : VMware Workstation
