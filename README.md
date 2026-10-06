@@ -378,6 +378,67 @@ git push
 ### Dépôt GitHub mis à jour
 🔗 https://github.com/cworoud-bit/Ubuntu
 
+
+## 15. Installation de Vagrant + Vagrantfile
+
+⚠️ Note : la virtualisation imbriquée (nested virtualization) n'étant pas
+supportée par la plateforme physique (Hyper-V actif sur l'hôte Windows
+empêchant VT-x/EPT), le provider **Docker** a été utilisé à la place de
+VirtualBox pour Vagrant.
+
+### Installation de Vagrant
+\`\`\`bash
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update
+sudo apt install vagrant -y
+\`\`\`
+Résultat : Vagrant 2.4.9
+
+### Vagrantfile (provider Docker)
+\`\`\`ruby
+Vagrant.configure("2") do |config|
+  config.vm.define "ubuntu-vagrant" do |node|
+    node.vm.provider "docker" do |d|
+      d.image = "rastasheep/ubuntu-sshd:18.04"
+      d.has_ssh = true
+    end
+    node.ssh.username = "root"
+    node.ssh.password = "root"
+    node.ssh.insert_key = false
+  end
+end
+\`\`\`
+
+### Commande
+\`\`\`bash
+vagrant up
+\`\`\`
+
+### Capture d'écran
+![Vagrant up réussi](screenshots/vagrant-up.png)
+
+---
+
+## 16. Connexion avec vagrant ssh
+
+\`\`\`bash
+vagrant ssh
+\`\`\`
+
+### Capture d'écran
+![Connexion vagrant ssh](screenshots/vagrant-ssh.png)
+
+### Comparaison avec la création manuelle de VM
+
+| Critère | Création manuelle (VMware) | Vagrant |
+|---|---|---|
+| Temps de mise en place | Long (ISO, partitionnement, installation OS complète) | Rapide (une seule commande `vagrant up`) |
+| Reproductibilité | Manuelle, difficile à refaire à l'identique | Automatique via le Vagrantfile versionnable |
+| Configuration SSH | À faire manuellement à chaque fois | Définie une fois dans le Vagrantfile |
+| Documentation | Nécessite de noter chaque étape séparément | Le Vagrantfile **est** la documentation |
+| Cas d'usage | Apprentissage approfondi de l'installation OS | Tests rapides, environnements jetables, CI/CD |
+| Contrainte rencontrée | — | Nested virtualization indisponible → provider Docker utilisé comme alternative à VirtualBox |
 ---
 
 ## Résumé du projet
