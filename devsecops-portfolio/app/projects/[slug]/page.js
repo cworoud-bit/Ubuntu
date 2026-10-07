@@ -1,6 +1,9 @@
-
 import { projects } from "../../../data/projects";
 import { notFound } from "next/navigation";
+
+export function generateStaticParams() {
+  return projects.map((p) => ({ slug: p.slug }));
+}
 
 export default async function ProjectDetail({ params }) {
   const { slug } = await params;
