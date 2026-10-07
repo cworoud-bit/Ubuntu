@@ -441,6 +441,44 @@ vagrant ssh
 | Contrainte rencontrée | — | Nested virtualization indisponible → provider Docker utilisé comme alternative à VirtualBox |
 ---
 
+## 17. Configuration automatique du Vagrantfile (nom, IP, RAM, CPU)
+
+⚠️ Note : le provider Docker étant utilisé (voir points 15-16), la
+configuration réseau/ressources diffère de VirtualBox mais atteint le
+même objectif via `create_args`.
+
+### Configuration utilisée
+\`\`\`ruby
+Vagrant.configure("2") do |config|
+  config.vm.define "ubuntu-vagrant" do |node|
+    node.vm.provider "docker" do |d|
+      d.image = "rastasheep/ubuntu-sshd:18.04"
+      d.has_ssh = true
+      d.create_args = [
+        "--hostname=ubuntu-vagrant-vm",
+        "--network=vagrant_net",
+        "--ip=172.28.0.10",
+        "--memory=1024m",
+        "--cpus=1"
+      ]
+    end
+    node.ssh.username = "root"
+    node.ssh.password = "root"
+    node.ssh.insert_key = false
+  end
+end
+\`\`\`
+
+### Résultat vagrant status
+\`\`\`
+Current machine states:
+
+ubuntu-vagrant            running (docker)
+\`\`\`
+
+### Capture d'écran
+![Vagrant status avec configuration personnalisée](screenshots/vagrant-status-config.png)
+
 ## Résumé du projet
 
 | # | Tâche | Statut |
@@ -462,8 +500,17 @@ vagrant ssh
 | 15-16 | Vagrant (Docker provider) | ✅ |
 
 ## Environnement technique
-- **Hyperviseur** : VMware Workstation
-- **OS invité** : Ubuntu Server 26.04 LTS
-- **Machine physique** : Windows (PowerShell / CMD)
-- **Adresse IP de la VM** : `192.168.220.174`
-- **Conteneurisation** : Docker 29.8.1, Nginx (alpine)
+
+* **Hyperviseur** : VMware Workstation
+* **OS invité** : Ubuntu Server 26.04 LTS
+* **Machine physique (hôte)** : Windows (PowerShell / CMD)
+* **Adresse IP de la VM** : `192.168.220.174`
+* **Accès distant** : SSH (authentification par clé ed25519)
+* **Conteneurisation** : Docker 29.8.1, Nginx (alpine)
+* **Orchestration locale** : Docker Compose
+* **CI/CD** : Jenkins 2.580.1 (service, port 8080)
+* **Infrastructure as Code** : Vagrant 2.4.9 (provider Docker)
+* **Langage/Runtime** : Java 21 (OpenJDK, prérequis Jenkins)
+* **Gestion de version** : Git + GitHub (push via SSH)
+* **Pare-feu** : UFW (ports 22, 8080, 8081 ouverts)
+* **Portfolio** : HTML5 / CSS3 / JavaScript (fichier autonome, thème terminal)
